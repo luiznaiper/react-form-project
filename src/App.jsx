@@ -1,60 +1,33 @@
 import { useState } from 'react';
-import Button from './components/Button';
 import Card from './components/Card';
 import Container from './components/Container';
-import Input from './components/Input';
-import useForm from './hooks/useForm';
+import UserForm from './components/UserForm';
 
 const App = () => {
   const [users, setUsers] = useState([]);
 
-  const [form, handleChange, reset] = useForm({
-    name: '',
-    lastName: '',
-    email: '',
-  });
-  const submitForm = (e) => {
-    e.preventDefault();
-    setUsers([...users, form]);
-    reset();
+  const submitForm = (user) => {
+    setUsers([...users, user]);
   };
   return (
-    <Container>
-      <Card>
-        <div style={{ padding: 20 }}>
-          <form onSubmit={submitForm}>
-            <Input
-              label="Name"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-            />
-            <Input
-              label="Last Name"
-              name="lastName"
-              value={form.lastName}
-              onChange={handleChange}
-            />
-            <Input
-              label="Email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-            />
-            <Button>Enviar</Button>
-          </form>
-        </div>
-      </Card>
-      <Card>
-        <ul>
-          {users.map((user) => (
-            <li key={user.email}>
-              {user.name} {user.lastName} : {user.email}
-            </li>
-          ))}
-        </ul>
-      </Card>
-    </Container>
+    <div style={{ marginTop: '15%' }}>
+      <Container>
+        <Card>
+          <div style={{ padding: 20 }}>
+            <UserForm submit={submitForm} />
+          </div>
+        </Card>
+        <Card>
+          <ul>
+            {users.map((user) => (
+              <li key={user.email}>
+                {user.name} {user.lastName} : {user.email}
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </Container>
+    </div>
   );
 };
 
